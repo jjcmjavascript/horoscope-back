@@ -25,4 +25,12 @@ export const config = {
   sentry: {
     dsn: process.env.SENTRY_DSN,
   },
+  aws: {
+    lambda: {
+      key: process.env.AWS_ACCESS_KEY,
+      secret: process.env.AWS_SECRET_KEY,
+      region: process.env.AWS_REGION,
+      url: process.env.AWS_LAMBDA_URL,
+    },
+  },
 };
