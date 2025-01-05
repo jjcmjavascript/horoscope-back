@@ -40,3 +40,18 @@ model PushNotificationToken {
   userId Int? @unique
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+
+model Horoscope {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  details HoroscopeDetail[]
+}
+
+model HoroscopeDetail {
+  id Int  @id()
+  sign String @db.VarChar()
+  horoscopeId Int
+  horoscope Horoscope @relation(fields: [horoscopeId], references: [id] )
+  data String @db.Text
+}
