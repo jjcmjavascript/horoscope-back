@@ -1,13 +1,8 @@
-export interface HoroscopeDetailsPrimitiveData {
-  type: string;
-  value: string;
-}
-
 export interface HoroscopeDetailsPrimitive {
   id: number;
   horoscopeId: number;
   sign: string;
-  data: HoroscopeDetailsPrimitiveData;
+  data: Record<string, string>;
 }
 
 export class HoroscopeDetails {
@@ -38,8 +33,30 @@ export class HoroscopeDetails {
   }
 
   static fromArray(
-    horoscopes_d: Array<HoroscopeDetailsPrimitive>,
-  ): Array<HoroscopeDetails> {
-    return horoscopes_d.map((horoscope) => new HoroscopeDetails(horoscope));
+    horoscopes_d: HoroscopeDetailsPrimitive[],
+  ): HoroscopeDetails[] {
+    return horoscopes_d.map(
+      (horoscope) =>
+        new HoroscopeDetails({
+          ...horoscope,
+        }),
+    );
+  }
+
+  static masivefromQuery(
+    horoscopes_d: {
+      id: number;
+      horoscopeId: number;
+      sign: string;
+      data: string;
+    }[],
+  ) {
+    return horoscopes_d.map(
+      (horoscope) =>
+        new HoroscopeDetails({
+          ...horoscope,
+          data: JSON.parse(horoscope.data),
+        }),
+    );
   }
 }

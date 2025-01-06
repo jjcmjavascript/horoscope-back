@@ -35,7 +35,7 @@ export class HoroscopeDetailsCreateRepository {
           id: tempDetails.id,
           horoscopeId: tempDetails.horoscopeId,
           sign: tempDetails.sign,
-          data: JSON.parse(tempDetails.data) as HoroscopeDetailsPrimitiveData,
+          data: JSON.parse(tempDetails.data),
         });
       });
 
