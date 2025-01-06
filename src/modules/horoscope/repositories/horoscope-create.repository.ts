@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  ConflictException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Horoscope } from '@shared/entities/horoscope.entity';
 import { PrismaService } from '@shared/services/database/prisma/prisma.service';
 import { HoroscopeDetailsCreateRepository } from './horoscope-details-create.repository';
@@ -21,9 +17,8 @@ export class HoroscopeCreateRepository {
     horoscope: Horoscope;
     horoscopeDetails: HoroscopeDetails[];
   }> {
-    await this.checkDuplicateId();
-
     try {
+      console.log('horoscopeJson', horoscopeJson);
       const [horoscope, horoscopeDetails] =
         await this.prismaService.$transaction(async (ctx) => {
           const tempHoroscope = await ctx.horoscope.create({
@@ -56,16 +51,6 @@ export class HoroscopeCreateRepository {
       throw new InternalServerErrorException(
         'An unexpected error occurred during horoscope creation',
       );
-    }
-  }
-
-  async checkDuplicateId(): Promise<void> {
-    const horoscope = await this.prismaService.horoscope.findFirst({
-      where: { createdAt: new Date() },
-    });
-
-    if (horoscope) {
-      throw new ConflictException({ errors: ['Horoscope ID already exists'] });
     }
   }
 }

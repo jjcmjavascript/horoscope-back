@@ -6,7 +6,7 @@ import { Horoscope } from '@shared/entities/horoscope.entity';
 
 interface RequestQuery {
   date: Date;
-  data: Record<string, Record<string, string>>;
+  signs: Record<string, Record<string, string>>;
 }
 
 @Injectable()
@@ -23,14 +23,15 @@ export class HoroscopeCreateFromChatGptRepository {
       const scriptResult = (await initHoroscopeProcess()) as RequestQuery;
 
       const result = await this.horoscopeCreateRepository.executeTransaction(
-        scriptResult.data,
+        scriptResult.signs,
       );
 
       return {
         horoscope: result.horoscope,
         horoscopeDetails: result.horoscopeDetails,
       };
-    } catch (e) {
+    } catch (e: unknown) {
+      console.error(e);
       throw new InternalServerErrorException(
         'An unexpected error occurred during horoscope creation',
       );

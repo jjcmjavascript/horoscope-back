@@ -2,8 +2,11 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { HoroscopeFindOneFromNowRepository } from './horoscope-find-one-from-now.repository';
 import { HoroscopeDetailsFindAllRepository } from './horoscope-details-find-all.repository';
 import { HoroscopeCreateFromChatGptRepository } from './horoscope-create-from-chat-gpt.repository';
-import { Horoscope } from '@shared/entities/horoscope.entity';
-import { HoroscopeDetails } from '@shared/entities/horoscope-details.entity';
+import { HoroscopePrimitive } from '@shared/entities/horoscope.entity';
+import {
+  HoroscopeDetails,
+  HoroscopeDetailsPrimitive,
+} from '@shared/entities/horoscope-details.entity';
 
 @Injectable()
 export class HoroscopeFindOrCreateRepository {
@@ -14,27 +17,32 @@ export class HoroscopeFindOrCreateRepository {
   ) {}
 
   async execute(): Promise<{
-    horoscope: Horoscope;
-    horoscopeDetails: HoroscopeDetails[];
+    horoscope: HoroscopePrimitive;
+    horoscopeDetails: HoroscopeDetailsPrimitive[];
   }> {
     try {
-      const horoscope = await this.horoscopeFindOneFromNowRepository.execute();
-
+      let horoscope = await this.horoscopeFindOneFromNowRepository.execute();
+      let horoscopeDetails: HoroscopeDetails[];
       if (horoscope) {
-        const horoscopeDetails =
-          await this.horoscopeDetailsFindAllRepository.execute({
+        horoscopeDetails = await this.horoscopeDetailsFindAllRepository.execute(
+          {
             horoscopeId: horoscope.toPrimitive().id,
-          });
-
-        return {
-          horoscope,
-          horoscopeDetails,
-        };
+          },
+        );
+      } else {
+        const result =
+          await this.horoscopeCreateFromChatGptRequest.executeTransaction();
+        horoscope = result.horoscope;
+        horoscopeDetails = result.horoscopeDetails;
       }
 
-      return await this.horoscopeCreateFromChatGptRequest.executeTransaction();
-    } catch {
-      throw new InternalServerErrorException('');
+      return {
+        horoscope: horoscope.toPrimitive(),
+        horoscopeDetails: horoscopeDetails.map((h) => h.toPrimitive()),
+      };
+    } catch (e) {
+      console.error(e);
+      throw new InternalServerErrorException('Internal server error');
     }
   }
 }

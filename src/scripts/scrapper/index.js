@@ -33,6 +33,7 @@ async function createConversation() {
 }
 
 async function getChatGptResponse() {
+  console.info('Generating chat');
   const messages = await createConversation();
 
   const openai = new OpenAI({
@@ -43,13 +44,15 @@ async function getChatGptResponse() {
     model: 'gpt-4o-mini',
     messages,
   });
-
+  console.info('chat finished');
   return completion.choices[0].message.content;
 }
 
 export async function initHoroscopeProcess() {
+  let fileContent = null;
+
   try {
-    const fileContent = await getChatGptResponse();
+    fileContent = await getChatGptResponse();
 
     return {
       date: nowDate.toISOString(),
@@ -62,6 +65,7 @@ export async function initHoroscopeProcess() {
       ),
     };
   } catch (e) {
-    console.error(e);
+    console.log(e, 'fileContent', fileContent);
+    throw Error('error in horoscope script');
   }
 }
