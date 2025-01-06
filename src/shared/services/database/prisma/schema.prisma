@@ -49,9 +49,9 @@ model Horoscope {
 }
 
 model HoroscopeDetail {
-  id Int  @id()
+  id Int  @id @default(autoincrement())
   sign String @db.VarChar()
-  horoscopeId Int
+  horoscopeId Int @db.Integer
   horoscope Horoscope @relation(fields: [horoscopeId], references: [id] )
   data String @db.Text
 }

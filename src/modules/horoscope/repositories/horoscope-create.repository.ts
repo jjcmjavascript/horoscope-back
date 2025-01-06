@@ -5,13 +5,25 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '@shared/services/database/prisma/prisma.service';
 import { Horoscope } from '@entities/horoscope.entity';
+import { HoroscopeDetailsCreateRepository } from './horoscope-details-create.repository';
 
 @Injectable()
 export class HoroscopeCreateRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly horoscopeDetailsCreateRepository: HoroscopeDetailsCreateRepository
+    private readonly prismaService: PrismaService) {}
 
   async executeTransaction(): Promise<Horoscope> {
     await this.checkDuplicateId();
+    const data = {
+      date: (new Date).toISOString(),
+      data: {
+        virgo: {
+          amor: "prueba",
+          dinero: "equisde"
+        }
+      },
+    }
 
     try {
       const newHoroscope = await this.prismaService.$transaction(
@@ -21,6 +33,8 @@ export class HoroscopeCreateRepository {
               createdAt: new Date(),
             },
           });
+
+          this.horoscopeDetailsCreateRepository.executeBulkFromTransaction(ctx)
 
           return new Horoscope({
             id: tempHoroscope.id,

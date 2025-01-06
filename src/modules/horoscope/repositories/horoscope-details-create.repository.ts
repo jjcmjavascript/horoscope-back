@@ -9,6 +9,7 @@ import {
   HoroscopeDetailsPrimitive,
   HoroscopeDetailsPrimitiveData,
 } from '@entities/horoscope-details.entity';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class HoroscopeDetailsCreateRepository {
@@ -47,17 +48,29 @@ export class HoroscopeDetailsCreateRepository {
     }
   }
 
-  async checkDuplicateId(id?: number): Promise<void> {
-    const details = id
-      ? await this.prismaService.horoscopeDetail.findUnique({
-          where: { id },
-        })
-      : null;
+  async executeFromTransaction(
+    ctx: Prisma.TransactionClient,
+    horoscopeId: number,
+    sign: string,
+    data: string,
+  ): Promise<HoroscopeDetails> {
+    const result = await ctx.horoscopeDetail.create({
+      data: {
+        horoscopeId,
+        sign,
+        data,
+      },
+    });
 
-    if (details) {
-      throw new ConflictException({
-        errors: ['Horoscope details ID already exists'],
-      });
-    }
+    return HoroscopeDetails.create({
+      ...result,
+      data: JSON.parse(result.data),
+    });
   }
+
+  async executeBulkFromTransaction(
+    ctx: Prisma.TransactionClient,
+    horoscopeId: number,
+    masive: Record<string, Record<string, string>>,
+  ): Promise<HoroscopeDetails> {}
 }
