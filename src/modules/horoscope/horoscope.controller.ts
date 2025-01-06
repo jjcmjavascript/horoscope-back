@@ -1,19 +1,18 @@
 import { Controller, Get } from '@nestjs/common';
 import { Public } from '@shared/decorators/public.decorator';
-import { HoroscopeFindOneFromNowRepository } from './repositories/horoscope-find-one-from-now.repository';
+import { HoroscopeFindOrCreateRepository } from './repositories/horoscope-find-or-create.repository';
 
 @Controller('horoscope')
 export class HoroscopeController {
   constructor(
-    private readonly horoscopeFindOneFromNowRepository: HoroscopeFindOneFromNowRepository,
+    private readonly horoscopeFindOrCreateRepository: HoroscopeFindOrCreateRepository,
   ) {}
 
   @Public()
   @Get()
   async index() {
-    const result = await this.horoscopeFindOneFromNowRepository.execute();
+    const result = await this.horoscopeFindOrCreateRepository.execute();
 
-    console.log(result);
     return result;
   }
 }

@@ -1,48 +1,63 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { Horoscope } from '@shared/entities/horoscope.entity';
 import { PrismaService } from '@shared/services/database/prisma/prisma.service';
+import { HoroscopeDetailsCreateRepository } from './horoscope-details-create.repository';
+import { HoroscopeDetails } from '@shared/entities/horoscope-details.entity';
 
 @Injectable()
 export class HoroscopeCreateRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly horoscopeDetailsCreateRepository: HoroscopeDetailsCreateRepository,
+  ) {}
 
-  // async executeTransaction(horoscope: any): Promise<Horoscope> {
-  //   await this.checkDuplicateId();
-  //   const data = {
-  //     date: new Date().toISOString(),
-  //     data: {
-  //       virgo: {
-  //         amor: 'prueba',
-  //         dinero: 'equisde',
-  //       },
-  //     },
-  //   };
+  async executeTransaction(
+    horoscopeJson: Record<string, Record<string, string>>,
+  ): Promise<{
+    horoscope: Horoscope;
+    horoscopeDetails: HoroscopeDetails[];
+  }> {
+    await this.checkDuplicateId();
 
-  //   try {
-  //     const newHoroscope = await this.prismaService.$transaction(
-  //       async (ctx) => {
-  //         const tempHoroscope = await ctx.horoscope.create({
-  //           data: {
-  //             createdAt: new Date(),
-  //           },
-  //         });
+    try {
+      const [horoscope, horoscopeDetails] =
+        await this.prismaService.$transaction(async (ctx) => {
+          const tempHoroscope = await ctx.horoscope.create({
+            data: {
+              createdAt: new Date(),
+            },
+          });
 
-  //         // this.horoscopeDetailsCreateRepository.executeBulkFromTransaction(ctx, )
+          const details: HoroscopeDetails[] =
+            await this.horoscopeDetailsCreateRepository.executeBulkFromTransaction(
+              ctx,
+              tempHoroscope.id,
+              horoscopeJson,
+            );
 
-  //         return new Horoscope({
-  //           id: tempHoroscope.id,
-  //           createdAt: tempHoroscope.createdAt,
-  //         });
-  //       },
-  //     );
+          const newHoroscope = Horoscope.create({
+            id: tempHoroscope.id,
+            createdAt: tempHoroscope.createdAt,
+          });
 
-  //     return newHoroscope;
-  //   } catch (e) {
-  //     console.error(e);
-  //     throw new InternalServerErrorException(
-  //       'An unexpected error occurred during horoscope creation',
-  //     );
-  //   }
-  // }
+          return [newHoroscope, details];
+        });
+
+      return {
+        horoscope,
+        horoscopeDetails,
+      };
+    } catch (e) {
+      console.error(e);
+      throw new InternalServerErrorException(
+        'An unexpected error occurred during horoscope creation',
+      );
+    }
+  }
 
   async checkDuplicateId(): Promise<void> {
     const horoscope = await this.prismaService.horoscope.findFirst({

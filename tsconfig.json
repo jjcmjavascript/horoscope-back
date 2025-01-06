@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@shared/*": ["src/shared/*"],
+      "@scripts/*": ["src/scripts/*"],
       "@modules/*": ["src/modules/*"],
       "@services/*": ["src/shared/services/*"],
       "@entities/*": ["src/shared/entities/*"],

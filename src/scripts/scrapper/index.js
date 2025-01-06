@@ -1,6 +1,6 @@
+import 'dotenv/config';
 import process from 'node:process';
 import OpenAI from 'openai';
-
 import { websitesScraper } from './scrappers/websitesScraper.js';
 import { initialSpeech } from './helpers/text.helper.js';
 import { monthNumberToWord } from './helpers/date-helper.js';

@@ -9,10 +9,21 @@ import { PrismaService } from '@shared/services/database/prisma/prisma.service';
 export class HoroscopeDetailsFindAllRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async execute(where: Partial<HoroscopeDetailsPrimitive>) {
-    const result = await this.prismaService.horoscopeDetail.findMany({
-      where,
-    });
+  async execute(where?: Partial<HoroscopeDetailsPrimitive>) {
+    let result: {
+      id: number;
+      horoscopeId: number;
+      sign: string;
+      data: string;
+    }[];
+
+    if (where) {
+      result = await this.prismaService.horoscopeDetail.findMany({
+        where,
+      });
+    } else {
+      result = await this.prismaService.horoscopeDetail.findMany();
+    }
 
     return HoroscopeDetails.masivefromQuery(result);
   }
