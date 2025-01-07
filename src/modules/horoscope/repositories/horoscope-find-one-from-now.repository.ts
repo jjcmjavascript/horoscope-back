@@ -11,7 +11,7 @@ export class HoroscopeFindOneFromNowRepository {
 
   async execute(): Promise<Horoscope | null> {
     const result = await this.prismaService.$queryRaw<HoroscopePrimitive[]>`
-      SELECT * FROM "Horoscope" where DATE("createdAt") = CURRENT_DATE limit 1
+      SELECT * FROM "Horoscope" where DATE("createdAt") = CURRENT_DATE limit 1;
     `;
 
     return result[0] ? Horoscope.create(result[0]) : null;

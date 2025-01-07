@@ -23,6 +23,7 @@ export class HoroscopeFindOrCreateRepository {
     try {
       let horoscope = await this.horoscopeFindOneFromNowRepository.execute();
       let horoscopeDetails: HoroscopeDetails[];
+
       if (horoscope) {
         horoscopeDetails = await this.horoscopeDetailsFindAllRepository.execute(
           {
