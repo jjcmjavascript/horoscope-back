@@ -10,6 +10,8 @@ export const config = {
     port,
     isProduction,
     hoursToSearch: 8,
+    mobileKey: process.env.MOBILE_KEY,
+    agent: 'mobile/horoscope',
   },
   cors: {
     origins,

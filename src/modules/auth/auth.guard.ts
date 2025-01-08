@@ -11,6 +11,7 @@ import { Request } from 'express';
 import { IS_PUBLIC_KEY } from '@decorators/public.decorator';
 import { Reflector } from '@nestjs/core';
 import { AuthJwtRefreshRepository } from './repositories/auth-jwt-refresh.repository';
+import { HAS_HOROSCOPE_KEY } from '@shared/decorators/public-with-key.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -26,12 +27,21 @@ export class AuthGuard implements CanActivate {
       context.getHandler(),
     );
 
+    const witHoroscopeKey = this.reflector.get<boolean>(
+      HAS_HOROSCOPE_KEY,
+      context.getHandler(),
+    );
+
     if (isPublic) {
       return true;
     }
 
     const request: Request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request, 'access_token');
+
+    if (witHoroscopeKey) {
+      return this.checkHoroscopeHeader(request);
+    }
 
     try {
       if (!token) {
@@ -93,5 +103,16 @@ export class AuthGuard implements CanActivate {
     }
     const [, cookieValue] = tokenCookie.split('=');
     return cookieValue.trim();
+  }
+
+  private checkHoroscopeHeader(request: Request) {
+    const auth = request.headers['authorization'];
+    const agent = request.headers['user-agent'];
+
+    if (agent !== config.app.agent || auth !== config.app.mobileKey) {
+      throw new UnauthorizedException('Invalid token');
+    }
+
+    return true;
   }
 }

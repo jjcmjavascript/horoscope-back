@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
-import { Public } from '@shared/decorators/public.decorator';
 import { HoroscopeFindOrCreateRepository } from './repositories/horoscope-find-or-create.repository';
+import { formatHoroscopeForMobile } from './helpers/format-horoscope-for-mobile.helper';
+import { HasHoroscopeKey } from '@shared/decorators/public-with-key.decorator';
 
 @Controller('horoscope')
 export class HoroscopeController {
@@ -8,11 +9,11 @@ export class HoroscopeController {
     private readonly horoscopeFindOrCreateRepository: HoroscopeFindOrCreateRepository,
   ) {}
 
-  @Public()
+  @HasHoroscopeKey()
   @Get()
   async index() {
     const result = await this.horoscopeFindOrCreateRepository.execute();
 
-    return result;
+    return formatHoroscopeForMobile(result);
   }
 }
