@@ -18,6 +18,7 @@ model User {
   password Password?
   pushNotificationToken PushNotificationToken?
   roles UserRole[]
+  yearListItem YearListItem[]
 }
 
 model Password {
@@ -54,4 +55,13 @@ model HoroscopeDetail {
   horoscopeId Int @db.Integer
   horoscope Horoscope @relation(fields: [horoscopeId], references: [id] )
   data String @db.Text
+}
+
+model YearListItem {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  description String @db.VarChar
+  locked Boolean @db.Boolean
+  userId Int? @unique
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

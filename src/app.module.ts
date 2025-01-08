@@ -9,6 +9,7 @@ import { config } from '@config/config';
 import { UserModule } from './modules/users/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { HoroscopeModule } from './modules/horoscope/horoscope.module';
+import { YearListItemModule } from '@modules/year-list-item/year-list-item.module';
 
 const providers = [];
 
@@ -31,6 +32,7 @@ providers.push({
     AuthModule,
     PushNotificationTokenModule,
     HoroscopeModule,
+    YearListItemModule,
   ],
   controllers: [],
   providers,
