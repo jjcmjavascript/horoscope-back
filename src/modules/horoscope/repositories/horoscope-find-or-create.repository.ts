@@ -7,6 +7,8 @@ import {
   HoroscopeDetails,
   HoroscopeDetailsPrimitive,
 } from '@shared/entities/horoscope-details.entity';
+import { HoroscopeFindOneRepository } from './horoscope-find-one.repositoty';
+import { config } from '@config/config';
 
 @Injectable()
 export class HoroscopeFindOrCreateRepository {
@@ -14,6 +16,7 @@ export class HoroscopeFindOrCreateRepository {
     private readonly horoscopeFindOneFromNowRepository: HoroscopeFindOneFromNowRepository,
     private readonly horoscopeDetailsFindAllRepository: HoroscopeDetailsFindAllRepository,
     private readonly horoscopeCreateFromChatGptRequest: HoroscopeCreateFromChatGptRepository,
+    private readonly horoscopeFindOneRepository: HoroscopeFindOneRepository,
   ) {}
 
   async execute(): Promise<{
@@ -21,13 +24,20 @@ export class HoroscopeFindOrCreateRepository {
     horoscopeDetails: HoroscopeDetailsPrimitive[];
   }> {
     try {
-      let horoscope = await this.horoscopeFindOneFromNowRepository.execute();
+      const date = new Date();
+      const hours = date.getHours();
+
+      let horoscope =
+        hours >= config.app.hoursToSearch
+          ? await this.horoscopeFindOneFromNowRepository.execute()
+          : await this.horoscopeFindOneRepository.execute();
+
       let horoscopeDetails: HoroscopeDetails[];
 
       if (horoscope) {
         horoscopeDetails = await this.horoscopeDetailsFindAllRepository.execute(
           {
-            horoscopeId: horoscope.toPrimitive().id,
+            horoscopeId: horoscope.id,
           },
         );
       } else {

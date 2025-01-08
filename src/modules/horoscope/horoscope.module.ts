@@ -7,10 +7,12 @@ import { HoroscopeFindOrCreateRepository } from './repositories/horoscope-find-o
 import { HoroscopeDetailsFindAllRepository } from './repositories/horoscope-details-find-all.repository';
 import { HoroscopeCreateFromChatGptRepository } from './repositories/horoscope-create-from-chat-gpt.repository';
 import { HoroscopeDetailsCreateRepository } from './repositories/horoscope-details-create.repository';
+import { HoroscopeFindOneRepository } from './repositories/horoscope-find-one.repositoty';
 
 @Module({
   imports: [PrismaModule],
   providers: [
+    HoroscopeFindOneRepository,
     HoroscopeFindOneFromNowRepository,
     HoroscopeDetailsFindAllRepository,
     HoroscopeCreateRepository,
@@ -20,6 +22,7 @@ import { HoroscopeDetailsCreateRepository } from './repositories/horoscope-detai
   ],
   controllers: [HoroscopeController],
   exports: [
+    HoroscopeFindOneRepository,
     HoroscopeFindOneFromNowRepository,
     HoroscopeDetailsFindAllRepository,
     HoroscopeCreateRepository,

@@ -9,6 +9,7 @@ export const config = {
   app: {
     port,
     isProduction,
+    hoursToSearch: 8,
   },
   cors: {
     origins,

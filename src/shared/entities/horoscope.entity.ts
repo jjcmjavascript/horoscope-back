@@ -10,6 +10,10 @@ export class Horoscope {
     this.#attributes = horoscope;
   }
 
+  get id() {
+    return this.#attributes.id;
+  }
+
   static create(horoscope: Partial<HoroscopePrimitive>): Horoscope {
     return new Horoscope({
       id: horoscope.id,
