@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { PushNotificationTokenPublishNotification } from '@modules/push-notification-tokens/repositories/push-notification-token-publish.repository';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class PushNotificationScheduleService {
     private readonly pushNotificationTokenPublishNotification: PushNotificationTokenPublishNotification,
   ) {}
 
-  @Cron(CronExpression.EVERY_5_MINUTES)
+  @Cron('10 5 * * *')
   async handleDailyHoroscope(): Promise<void> {
     try {
       console.log('creatin notification');
