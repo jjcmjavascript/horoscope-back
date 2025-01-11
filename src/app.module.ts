@@ -6,10 +6,11 @@ import { SentryGlobalFilter } from '@sentry/nestjs/setup';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { PushNotificationTokenModule } from '@modules/push-notification-tokens/push-notification-token.module';
 import { config } from '@config/config';
-import { UserModule } from './modules/users/user.module';
-import { AuthModule } from './modules/auth/auth.module';
 import { HoroscopeModule } from './modules/horoscope/horoscope.module';
-import { YearListItemModule } from '@modules/year-list-item/year-list-item.module';
+
+// import { UserModule } from './modules/users/user.module';
+// import { AuthModule } from './modules/auth/auth.module';
+// import { YearListItemModule } from '@modules/year-list-item/year-list-item.module';
 
 const providers = [];
 
@@ -28,11 +29,8 @@ providers.push({
 @Module({
   imports: [
     SentryModule.forRoot(),
-    UserModule,
-    AuthModule,
     PushNotificationTokenModule,
     HoroscopeModule,
-    YearListItemModule,
   ],
   controllers: [],
   providers,
