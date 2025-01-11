@@ -62,6 +62,6 @@ model YearListItem {
   createdAt DateTime @default(now())
   description String @db.VarChar
   locked Boolean @db.Boolean
-  userId Int? @unique
+  userId Int? @db.Integer
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

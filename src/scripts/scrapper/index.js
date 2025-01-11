@@ -48,6 +48,14 @@ async function getChatGptResponse() {
   return completion.choices[0].message.content;
 }
 
+const extractJson = (content) => {
+  const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
+  if (jsonMatch && jsonMatch[1]) {
+    return jsonMatch[1]; // Devuelve el bloque JSON
+  }
+  throw new Error('No se pudo encontrar un bloque JSON válido.');
+};
+
 export async function initHoroscopeProcess() {
   let fileContent = null;
 
@@ -57,12 +65,7 @@ export async function initHoroscopeProcess() {
     return {
       date: nowDate.toISOString(),
       formatedDate: `${monthNumberToWord(nowDate.getMonth() + 1)} ${nowDate.getDate()} del ${nowDate.getFullYear()}`,
-      signs: JSON.parse(
-        fileContent
-          .replace(/.*?```json(.*?)```.*/, '$1')
-          .trim()
-          .replace(/```(json)?/g, ''),
-      ),
+      signs: JSON.parse(extractJson(fileContent)),
     };
   } catch (e) {
     console.log(e, 'fileContent', fileContent);

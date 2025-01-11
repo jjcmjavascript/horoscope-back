@@ -4,6 +4,7 @@ import { YearListItemCreateRepository } from './repositories/year-list-item-crea
 import { YearListItemLockRepository } from './repositories/year-list-item-lock.repository';
 import { YearListItemController } from './year-list-item.controller';
 import { YearListItemFindAllRepository } from './repositories/year-list-item-find-all.repository';
+import { YearListItemDestroyRepository } from './repositories/year-list-item-detroy.respository';
 
 @Module({
   providers: [
@@ -11,6 +12,7 @@ import { YearListItemFindAllRepository } from './repositories/year-list-item-fin
     YearListItemCreateRepository,
     YearListItemLockRepository,
     YearListItemFindAllRepository,
+    YearListItemDestroyRepository,
   ],
   controllers: [YearListItemController],
 })

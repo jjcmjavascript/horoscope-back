@@ -3,7 +3,7 @@ import { HoroscopeFindOrCreateRepository } from './repositories/horoscope-find-o
 import { formatHoroscopeForMobile } from './helpers/format-horoscope-for-mobile.helper';
 import { HasHoroscopeKey } from '@shared/decorators/public-with-key.decorator';
 
-@Controller('horoscope')
+@Controller('horoscopes')
 export class HoroscopeController {
   constructor(
     private readonly horoscopeFindOrCreateRepository: HoroscopeFindOrCreateRepository,
