@@ -8,10 +8,12 @@ import { HoroscopeDetailsFindAllRepository } from './repositories/horoscope-deta
 import { HoroscopeCreateFromChatGptRepository } from './repositories/horoscope-create-from-chat-gpt.repository';
 import { HoroscopeDetailsCreateRepository } from './repositories/horoscope-details-create.repository';
 import { HoroscopeFindOneRepository } from './repositories/horoscope-find-one.repositoty';
+import { HoroscopeScheduleService } from './horoscope-schedule.service';
 
 @Module({
   imports: [PrismaModule],
   providers: [
+    HoroscopeScheduleService,
     HoroscopeFindOneRepository,
     HoroscopeFindOneFromNowRepository,
     HoroscopeDetailsFindAllRepository,
