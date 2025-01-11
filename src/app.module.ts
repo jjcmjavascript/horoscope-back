@@ -26,8 +26,8 @@ if (config.app.isProduction) {
   imports: [
     ScheduleModule.forRoot(),
     SentryModule.forRoot(),
-    PushNotificationTokenModule,
     HoroscopeModule,
+    PushNotificationTokenModule,
   ],
   controllers: [],
   providers,
