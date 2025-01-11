@@ -3,7 +3,7 @@ import { SentryModule } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
 import { SentryGlobalFilter } from '@sentry/nestjs/setup';
 
-import { AuthGuard } from './modules/auth/auth.guard';
+// import { AuthGuard } from './modules/auth/auth.guard';
 import { PushNotificationTokenModule } from '@modules/push-notification-tokens/push-notification-token.module';
 import { config } from '@config/config';
 import { HoroscopeModule } from './modules/horoscope/horoscope.module';
@@ -20,11 +20,6 @@ if (config.app.isProduction) {
     useClass: SentryGlobalFilter,
   });
 }
-
-providers.push({
-  provide: 'APP_GUARD',
-  useClass: AuthGuard,
-});
 
 @Module({
   imports: [
