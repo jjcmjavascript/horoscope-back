@@ -12,7 +12,7 @@ COPY ./src/shared/services/database/prisma/schema.prisma ./src/shared/services/d
 
 RUN npm install
 
-RUN npx prisma generate
+# RUN npx prisma generate
 
 COPY . .
 
