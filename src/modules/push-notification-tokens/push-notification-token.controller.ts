@@ -21,8 +21,8 @@ export class PushNotificationTokenController {
   @Get('publish')
   async publish(): Promise<void> {
     return await this.pushNotificationTokenSend.execute(
-      'Llego tu horóscopo',
-      'La magia del universo hoy estará contigo',
+      'Llego tu horóscopo 📬',
+      'La magia del universo hoy estará contigo 🌌',
     );
   }
 }

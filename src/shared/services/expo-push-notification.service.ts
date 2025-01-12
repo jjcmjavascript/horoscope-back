@@ -18,6 +18,7 @@ export interface ExpoPushMessage {
   body: string;
   data: any;
   title: string;
+  subtitle?: string;
 }
 
 const defaultExpoPushMessage: ExpoPushMessage = {
@@ -26,6 +27,7 @@ const defaultExpoPushMessage: ExpoPushMessage = {
   body: '',
   data: {},
   title: '',
+  subtitle: 'Horoscopo',
 };
 
 @Injectable()

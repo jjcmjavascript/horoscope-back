@@ -13,8 +13,8 @@ export class PushNotificationScheduleService {
     try {
       console.log('creatin notification');
       await this.pushNotificationTokenPublishNotification.execute(
-        'Llego tu horóscopo',
-        'La magia del universo hoy estará contigo',
+        'Llego tu horóscopo 📬',
+        'La magia del universo hoy estará contigo 🌌',
       );
       console.log('notification sended');
     } catch (error) {
