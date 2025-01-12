@@ -17,12 +17,12 @@ export class PushNotificationTokenController {
     await this.pushNotificationTokenCreateRepository.execute(createDto);
   }
 
-  @Public()
-  @Get('publish')
-  async publish(): Promise<void> {
-    return await this.pushNotificationTokenSend.execute(
-      'Llego tu horóscopo 📬',
-      'La magia del universo hoy estará contigo 🌌',
-    );
-  }
+  // @Public()
+  // @Get('publish')
+  // async publish(): Promise<void> {
+  //   return await this.pushNotificationTokenSend.execute(
+  //     'Llego tu horóscopo 📬',
+  //     'La magia del universo hoy estará contigo 🌌',
+  //   );
+  // }
 }
