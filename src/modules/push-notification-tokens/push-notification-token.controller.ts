@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { PushNotificationTokenCreateDto } from './push-notification-token.dto';
 import { PushNotificationTokenCreateRepository } from './repositories/push-notification-token-create.repository';
 import { Public } from '@shared/decorators/public.decorator';
