@@ -8,7 +8,7 @@ export class HoroscopeScheduleService {
     private readonly horoscopeFindOrCreateRepository: HoroscopeFindOrCreateRepository,
   ) {}
 
-  @Cron('5 5 * * *')
+  @Cron('0 10 * * *')
   async handleDailyHoroscope(): Promise<void> {
     try {
       const result = await this.horoscopeFindOrCreateRepository.execute();
