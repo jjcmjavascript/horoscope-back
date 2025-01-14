@@ -8,7 +8,7 @@ export class PushNotificationScheduleService {
     private readonly pushNotificationTokenPublishNotification: PushNotificationTokenPublishNotification,
   ) {}
 
-  @Cron('10 10 * * *')
+  @Cron('10 12 * * *')
   async handleDailyHoroscope(): Promise<void> {
     try {
       console.log('creatin notification');
