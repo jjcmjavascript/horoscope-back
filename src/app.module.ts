@@ -11,6 +11,7 @@ import { HoroscopeModule } from './modules/horoscope/horoscope.module';
 
 // import { UserModule } from './modules/users/user.module';
 // import { AuthModule } from './modules/auth/auth.module';
+import { AuthGuard } from '@modules/auth/auth.guard';
 // import { YearListItemModule } from '@modules/year-list-item/year-list-item.module';
 
 const providers = [];
@@ -21,6 +22,11 @@ if (config.app.isProduction) {
     useClass: SentryGlobalFilter,
   });
 }
+
+providers.push({
+  provide: 'APP_GUARD',
+  useClass: AuthGuard,
+});
 
 @Module({
   imports: [

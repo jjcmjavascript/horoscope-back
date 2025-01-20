@@ -5,20 +5,20 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 
-import { JwtService } from '@nestjs/jwt';
+// import { JwtService } from '@nestjs/jwt';
 import { config } from '@config/config';
 import { Request } from 'express';
 import { IS_PUBLIC_KEY } from '@decorators/public.decorator';
 import { Reflector } from '@nestjs/core';
-import { AuthJwtRefreshRepository } from './repositories/auth-jwt-refresh.repository';
+// import { AuthJwtRefreshRepository } from './repositories/auth-jwt-refresh.repository';
 import { HAS_HOROSCOPE_KEY } from '@shared/decorators/public-with-key.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    private readonly jwtService: JwtService,
-    private readonly refreshTokenRepository: AuthJwtRefreshRepository,
+    // private readonly jwtService: JwtService,
+    // private readonly refreshTokenRepository: AuthJwtRefreshRepository,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -37,28 +37,26 @@ export class AuthGuard implements CanActivate {
     }
 
     const request: Request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request, 'access_token');
+    // const token = this.extractTokenFromHeader(request, 'access_token');
 
     if (witHoroscopeKey) {
       return this.checkHoroscopeHeader(request);
     }
 
     try {
-      if (!token) {
-        throw new UnauthorizedException('Invalid token');
-      }
-
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: config.jwt.jwtSecret,
-      });
-
-      request['user'] = payload;
+      //   if (!token) {
+      //     throw new UnauthorizedException('Invalid token');
+      //   }
+      //   const payload = await this.jwtService.verifyAsync(token, {
+      //     secret: config.jwt.jwtSecret,
+      //   });
+      //   request['user'] = payload;
     } catch {
-      const result = await this.tryRefreshToken(request);
+      // const result = await this.tryRefreshToken(request);
 
-      if (result) {
-        return true;
-      }
+      // if (result) {
+      //   return true;
+      // }
 
       throw new UnauthorizedException('Invalid token');
     }
@@ -66,44 +64,44 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  private async tryRefreshToken(request: Request): Promise<boolean> {
-    try {
-      const refreshToken = this.extractTokenFromHeader(
-        request,
-        'refresh_token',
-      );
+  // private async tryRefreshToken(request: Request): Promise<boolean> {
+  //   try {
+  //     const refreshToken = this.extractTokenFromHeader(
+  //       request,
+  //       'refresh_token',
+  //     );
 
-      if (refreshToken) {
-        const payload = await this.refreshTokenRepository.refreshTokens(
-          request,
-          refreshToken,
-        );
+  //     if (refreshToken) {
+  //       const payload = await this.refreshTokenRepository.refreshTokens(
+  //         request,
+  //         refreshToken,
+  //       );
 
-        request['user'] = await this.jwtService.verifyAsync(
-          payload.newAccessToken,
-          {
-            secret: config.jwt.jwtSecret,
-          },
-        );
+  //       request['user'] = await this.jwtService.verifyAsync(
+  //         payload.newAccessToken,
+  //         {
+  //           secret: config.jwt.jwtSecret,
+  //         },
+  //       );
 
-        return true;
-      }
-    } catch {
-      return false;
-    }
-  }
+  //       return true;
+  //     }
+  //   } catch {
+  //     return false;
+  //   }
+  // }
 
-  private extractTokenFromHeader(request: Request, tokenName: string): string {
-    const cookies = request.headers.cookie?.split(';') || [];
-    const tokenCookie = cookies.find((cookie) =>
-      cookie.trim().startsWith(`${tokenName}=`),
-    );
-    if (!tokenCookie) {
-      return null;
-    }
-    const [, cookieValue] = tokenCookie.split('=');
-    return cookieValue.trim();
-  }
+  // private extractTokenFromHeader(request: Request, tokenName: string): string {
+  //   const cookies = request.headers.cookie?.split(';') || [];
+  //   const tokenCookie = cookies.find((cookie) =>
+  //     cookie.trim().startsWith(`${tokenName}=`),
+  //   );
+  //   if (!tokenCookie) {
+  //     return null;
+  //   }
+  //   const [, cookieValue] = tokenCookie.split('=');
+  //   return cookieValue.trim();
+  // }
 
   private checkHoroscopeHeader(request: Request) {
     const auth = request.headers['authorization'];
