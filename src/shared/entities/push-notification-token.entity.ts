@@ -36,4 +36,8 @@ export class PushNotificationToken {
       token: this.#attributes.token,
     };
   }
+
+  get values() {
+    return this.#attributes;
+  }
 }

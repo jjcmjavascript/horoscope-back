@@ -36,4 +36,7 @@ export const config = {
       url: process.env.AWS_LAMBDA_URL,
     },
   },
+  openAi: {
+    key: process.env.GPTKEY,
+  },
 };

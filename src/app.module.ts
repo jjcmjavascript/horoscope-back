@@ -12,6 +12,7 @@ import { HoroscopeModule } from './modules/horoscope/horoscope.module';
 // import { UserModule } from './modules/users/user.module';
 // import { AuthModule } from './modules/auth/auth.module';
 import { AuthGuard } from '@modules/auth/auth.guard';
+import { TarotModule } from '@modules/tarot/tarot.module';
 // import { YearListItemModule } from '@modules/year-list-item/year-list-item.module';
 
 const providers = [];
@@ -34,6 +35,7 @@ providers.push({
     SentryModule.forRoot(),
     HoroscopeModule,
     PushNotificationTokenModule,
+    TarotModule,
   ],
   controllers: [],
   providers,
