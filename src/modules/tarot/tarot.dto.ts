@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsNumber,
   IsOptional,
   IsString,
   Matches,
@@ -9,20 +10,27 @@ import {
 } from 'class-validator';
 
 class Card {
+  @IsNumber()
+  order: number;
+
   @IsString()
-  @MaxLength(50)
+  @MaxLength(40)
   name: string;
 
   @IsString()
-  @MaxLength(100)
-  orientacion: string;
+  @MaxLength(20)
+  orientation: string;
 }
 
 export class TarotDto {
   @IsOptional()
   @IsString()
-  @MaxLength(50)
+  @MaxLength(30)
   name?: string;
+
+  @IsString()
+  @MaxLength(150)
+  question?: string;
 
   @IsOptional()
   @IsString()

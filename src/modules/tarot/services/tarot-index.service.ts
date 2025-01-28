@@ -4,18 +4,13 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 // import { PrismaService } from '@shared/services/database/prisma/prisma.service';
-import { TarotFindRepository } from './repositories/tarot-find-from-now.repository';
-import { TarotDto } from './tarot.dto';
 import { PushNotificationTokenFindAllRepository } from '@modules/push-notification-tokens/repositories/push-notification-token-find-all.repository';
-import { ChatGptService } from '@shared/services/chat-gpt.service';
-import { tarotPromp } from './tarot-promp.helper';
-import { TarotCreateRepository } from './repositories/tarot-create.repository';
+import { TarotFindRepository } from '../repositories/tarot-find-from-now.repository';
+import { TarotDto } from '../tarot.dto';
 
 @Injectable()
-export class TarotReadService {
+export class TarotIndexService {
   constructor(
-    private readonly chatGpt: ChatGptService,
-    private readonly tarotCreateRepository: TarotCreateRepository,
     private readonly tarotFindRepository: TarotFindRepository,
     private readonly tokenFindRepository: PushNotificationTokenFindAllRepository,
   ) {}
@@ -42,27 +37,10 @@ export class TarotReadService {
         },
       });
 
-      if (!result) {
-        // const chatResponse = await this.chatGpt.execute([
-        //   {
-        //     role: 'system',
-        //     content: tarotPromp,
-        //   },
-        //   {
-        //     role: 'user',
-        //     content: JSON.stringify(params.cards),
-        //   },
-        // ]);
-        // result = await this.tarotCreateRepository.execute({
-        //   pushNotificationTokenId: token.values.id,
-        //   name: params.name,
-        //   bithDate: params.birthDate,
-        //   reading: chatResponse,
-        // });
-      }
-
-      return { reading: 'result.values.reading' };
+      return JSON.parse(result.values.reading);
     } catch (e: unknown) {
+      console.log(e);
+
       if (e instanceof BadRequestException) {
         throw e;
       }
