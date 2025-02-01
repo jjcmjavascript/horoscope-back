@@ -7,16 +7,17 @@ import { PrismaModule } from '@modules/prisma/prisma.module';
 import { TarotReadService } from './services/tator-read.service';
 import { TarotIndexService } from './services/tarot-index.service';
 import { TarotFindRepository } from './repositories/tarot-find.repository';
+import { HoroscopeModule } from '@modules/horoscope/horoscope.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, HoroscopeModule],
   providers: [
     ChatGptService,
     TarotCreateRepository,
     TarotFindRepository,
     PushNotificationTokenFindAllRepository,
     TarotReadService,
-    TarotIndexService
+    TarotIndexService,
   ],
   exports: [
     ChatGptService,
@@ -24,7 +25,7 @@ import { TarotFindRepository } from './repositories/tarot-find.repository';
     TarotFindRepository,
     PushNotificationTokenFindAllRepository,
     TarotReadService,
-    TarotIndexService
+    TarotIndexService,
   ],
   controllers: [TarotController],
 })
