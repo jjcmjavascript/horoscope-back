@@ -2,7 +2,7 @@ export interface PrimitiveTarot {
   id?: number;
   pushNotificationTokenId?: number;
   name: string;
-  bithDate: string;
+  birthday: string;
   reading: string;
 }
 
@@ -14,7 +14,7 @@ export class Tarot {
       id: primitive.id,
       pushNotificationTokenId: primitive.pushNotificationTokenId,
       name: primitive.name,
-      bithDate: primitive.bithDate,
+      birthday: primitive.birthday,
       reading: primitive.reading,
     };
   }
@@ -28,7 +28,7 @@ export class Tarot {
       id: this.attributes.id,
       pushNotificationTokenId: this.attributes.pushNotificationTokenId,
       name: this.attributes.name,
-      bithDate: this.attributes.bithDate,
+      birthday: this.attributes.birthday,
       reading: this.attributes.reading,
     };
   }

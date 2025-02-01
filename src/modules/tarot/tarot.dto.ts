@@ -43,13 +43,9 @@ export class TarotCreateDto {
   birthday?: string;
 
   @IsString()
+  @IsOptional()
   @MaxLength(150)
   question?: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(10)
-  birthDate?: string;
 
   @IsString()
   @MaxLength(100)

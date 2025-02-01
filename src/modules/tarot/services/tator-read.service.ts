@@ -52,9 +52,9 @@ export class TarotReadService {
       if (!result) {
         let horoscope: string = null;
 
-        if (params.birthDate) {
+        if (params.birthday) {
           // 2025-02-01
-          const [, m, d] = params.birthDate.split('-');
+          const [, m, d] = params.birthday.split('-');
           const zodiacSign = datesToZodiacSign(parseInt(m), parseInt(d));
           const result = await this.horoscopeFindOrCreateRepository.execute();
           const singRedingHoroscope = result.horoscopeDetails.find(
@@ -77,7 +77,7 @@ export class TarotReadService {
             content: JSON.stringify({
               name: params.name,
               question: params.question,
-              birthDate: params.birthDate,
+              birthday: params.birthday,
               horoscope,
               cards: params.cards,
             }),
@@ -89,7 +89,7 @@ export class TarotReadService {
         result = await this.tarotCreateRepository.execute({
           pushNotificationTokenId: token.values.id,
           name: params.name,
-          bithDate: params.birthDate,
+          birthday: params.birthday,
           reading: JSON.stringify(JSON.parse(cleanedChatResponse)),
         });
       }

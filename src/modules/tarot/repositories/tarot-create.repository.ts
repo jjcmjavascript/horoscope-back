@@ -11,7 +11,7 @@ export class TarotCreateRepository {
       data: {
         pushNotificationTokenId: tarot.pushNotificationTokenId,
         name: tarot.name,
-        bithDate: tarot.bithDate,
+        birthday: tarot.birthday,
         reading: tarot.reading,
       },
     });
