@@ -22,11 +22,25 @@ class Card {
   orientation: string;
 }
 
-export class TarotDto {
+export class TarotIndexDto {
+  @IsString()
+  @MaxLength(100)
+  @Matches(/^ExponentPushToken\[[A-Za-z0-9]+\]$/, {
+    message: 'Invalid push token',
+  })
+  token: string;
+}
+
+export class TarotCreateDto {
   @IsOptional()
   @IsString()
   @MaxLength(30)
   name?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(30)
+  birthday?: string;
 
   @IsString()
   @MaxLength(150)

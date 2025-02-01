@@ -3,9 +3,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { config } from '@config/config';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.use(helmet());
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -14,9 +17,11 @@ async function bootstrap() {
   );
 
   app.enableCors({
+    allowedHeaders: ['Content-Type', 'Authorization', 'User-Agent'],
     origin: config.cors.origins,
     credentials: config.cors.credentials,
   });
+
   await app.listen(config.app.port);
 }
 

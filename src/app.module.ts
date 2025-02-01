@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { SentryModule } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
 import { SentryGlobalFilter } from '@sentry/nestjs/setup';
@@ -13,6 +13,8 @@ import { HoroscopeModule } from './modules/horoscope/horoscope.module';
 // import { AuthModule } from './modules/auth/auth.module';
 import { AuthGuard } from '@modules/auth/auth.guard';
 import { TarotModule } from '@modules/tarot/tarot.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { RequestLoggerMiddleware } from '@shared/middlewares/request-logget.middleware';
 // import { YearListItemModule } from '@modules/year-list-item/year-list-item.module';
 
 const providers = [];
@@ -29,8 +31,19 @@ providers.push({
   useClass: AuthGuard,
 });
 
+providers.push({
+  provide: 'APP_GUARD',
+  useClass: ThrottlerGuard,
+});
+
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 5,
+      },
+    ]),
     ScheduleModule.forRoot(),
     SentryModule.forRoot(),
     HoroscopeModule,
@@ -40,4 +53,8 @@ providers.push({
   controllers: [],
   providers,
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestLoggerMiddleware).forRoutes('*');
+  }
+}

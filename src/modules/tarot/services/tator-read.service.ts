@@ -9,9 +9,9 @@ import { ChatGptService } from '@shared/services/chat-gpt.service';
 
 import { extractJson } from '@shared/helpers/string.helper';
 import { TarotCreateRepository } from '../repositories/tarot-create.repository';
-import { TarotFindRepository } from '../repositories/tarot-find-from-now.repository';
 import { tarotPromp } from '../tarot-promp.helper';
-import { TarotDto } from '../tarot.dto';
+import { TarotFindRepository } from '../repositories/tarot-find.repository';
+import { TarotCreateDto } from '../tarot.dto';
 
 @Injectable()
 export class TarotReadService {
@@ -22,7 +22,7 @@ export class TarotReadService {
     private readonly tokenFindRepository: PushNotificationTokenFindAllRepository,
   ) {}
 
-  async execute(params: TarotDto) {
+  async execute(params: TarotCreateDto) {
     try {
       // Get each 22 hours
       const date = new Date();
@@ -38,9 +38,11 @@ export class TarotReadService {
       }
 
       let result = await this.tarotFindRepository.execute({
-        pushNotificationTokenId: token.values.id,
-        createdAt: {
-          gt: date,
+        where: {
+          pushNotificationTokenId: token.values.id,
+          createdAt: {
+            gt: date,
+          },
         },
       });
 
@@ -72,8 +74,6 @@ export class TarotReadService {
 
       return JSON.parse(result.values.reading);
     } catch (e: unknown) {
-      console.log(e);
-
       if (e instanceof BadRequestException) {
         throw e;
       }

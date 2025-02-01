@@ -3,10 +3,9 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-// import { PrismaService } from '@shared/services/database/prisma/prisma.service';
 import { PushNotificationTokenFindAllRepository } from '@modules/push-notification-tokens/repositories/push-notification-token-find-all.repository';
-import { TarotFindRepository } from '../repositories/tarot-find-from-now.repository';
-import { TarotDto } from '../tarot.dto';
+import { TarotFindRepository } from '../repositories/tarot-find.repository';
+import { TarotIndexDto } from '../tarot.dto';
 
 @Injectable()
 export class TarotIndexService {
@@ -15,9 +14,12 @@ export class TarotIndexService {
     private readonly tokenFindRepository: PushNotificationTokenFindAllRepository,
   ) {}
 
-  async execute(params: TarotDto) {
+  async execute(params: TarotIndexDto) {
     try {
-      // Get each 22 hours
+      if (!params.token) {
+        throw new BadRequestException('Token is required');
+      }
+
       const date = new Date();
       date.setHours(date.getHours() - 22);
 
@@ -31,16 +33,19 @@ export class TarotIndexService {
       }
 
       const result = await this.tarotFindRepository.execute({
-        pushNotificationTokenId: token.values.id,
-        createdAt: {
-          gt: date,
+        where: {
+          createdAt: {
+            gt: date,
+          },
         },
       });
 
+      if (!result) {
+        throw new BadRequestException('Tarot not found');
+      }
+
       return JSON.parse(result.values.reading);
     } catch (e: unknown) {
-      console.log(e);
-
       if (e instanceof BadRequestException) {
         throw e;
       }
