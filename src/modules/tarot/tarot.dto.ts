@@ -49,7 +49,7 @@ export class TarotCreateDto {
 
   @IsString()
   @MaxLength(100)
-  @Matches(/^ExponentPushToken\[[A-Za-z0-9]+\]$/, {
+  @Matches(/^ExponentPushToken\[[A-Za-z0-9_\-]+\]$/, {
     message: 'Invalid push token',
   })
   token: string;
