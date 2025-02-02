@@ -8,6 +8,8 @@ import { TarotReadService } from './services/tator-read.service';
 import { TarotIndexService } from './services/tarot-index.service';
 import { TarotFindRepository } from './repositories/tarot-find.repository';
 import { HoroscopeModule } from '@modules/horoscope/horoscope.module';
+import { TarotClearOldDataScheduleService } from './tarot-clear-old-data-schedule.service';
+import { TarotBulkDestroyRepository } from './repositories/tarot-bulk-destroy.repostory';
 
 @Module({
   imports: [PrismaModule, HoroscopeModule],
@@ -18,6 +20,8 @@ import { HoroscopeModule } from '@modules/horoscope/horoscope.module';
     PushNotificationTokenFindAllRepository,
     TarotReadService,
     TarotIndexService,
+    TarotBulkDestroyRepository,
+    TarotClearOldDataScheduleService,
   ],
   exports: [
     ChatGptService,

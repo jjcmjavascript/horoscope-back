@@ -6,6 +6,8 @@ import { PushNotificationTokenFindAllRepository } from './repositories/push-noti
 import { ExpoSendPushNotification } from '@shared/services/expo-push-notification.service';
 import { PushNotificationScheduleService } from './push-notification-schedule.service';
 import { PushNotificationTokenPublishNotification } from './repositories/push-notification-token-publish.repository';
+import { PushNotificacionTokenClearOldDataScheduleService } from './push-notificacion-token-clear-old-data-schedule.service';
+import { PushNotificationTokenBulkDestroyRespository } from './repositories/push-notification-token-bulk-destroy.respository';
 
 @Module({
   imports: [PrismaModule],
@@ -15,6 +17,8 @@ import { PushNotificationTokenPublishNotification } from './repositories/push-no
     PushNotificationTokenFindAllRepository,
     PushNotificationTokenPublishNotification,
     PushNotificationScheduleService,
+    PushNotificationTokenBulkDestroyRespository,
+    PushNotificacionTokenClearOldDataScheduleService,
   ],
   controllers: [PushNotificationTokenController],
   exports: [

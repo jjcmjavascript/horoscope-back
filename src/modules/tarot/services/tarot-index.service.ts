@@ -6,6 +6,7 @@ import {
 import { PushNotificationTokenFindAllRepository } from '@modules/push-notification-tokens/repositories/push-notification-token-find-all.repository';
 import { TarotFindRepository } from '../repositories/tarot-find.repository';
 import { TarotIndexDto } from '../tarot.dto';
+import { config } from '@config/config';
 
 @Injectable()
 export class TarotIndexService {
@@ -21,7 +22,7 @@ export class TarotIndexService {
       }
 
       const date = new Date();
-      date.setHours(date.getHours() - 22);
+      date.setHours(date.getHours() - config.app.hoursToSearchTarot);
 
       const foundedTokens = await this.tokenFindRepository.execute({
         token: params.token,

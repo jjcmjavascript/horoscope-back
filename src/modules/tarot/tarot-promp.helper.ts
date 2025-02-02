@@ -9,6 +9,7 @@ export const tarotPromp = `
       birthday: '01/01/1990', // Fecha de nacimiento del usuario
       question: 'Cual es el mensaje para mi hoy?', // Pregunta del usuario o consulta en la que se basa la tirada
       horoscope: signo, // el horóscopo del usuario para el dia de la consulta
+      previousReading: 'Texto de la lectura anterior', // Lectura anterior del usuario si existe
       cards: [ // Cartas de la tirada
         { order: 0, name: 'Caballero de Copas', orientation: 'up' },
         { order: 1, name: 'Cuatro de Copas', orientation: 'down' },
@@ -45,6 +46,8 @@ export const tarotPromp = `
   7. Si el usuario no proporciona su nombre, debes responder sin incluirlo.
   8. Si el usuario no proporciona su fecha de nacimiento debes considerarla en la interpretación.
   9. Si el usuario proporciona horoscopo, debes considerarlo en la interpretación.
+  10. Si el usuario proporciona una lectura anterior, debes considerarla en la interpretación.
+  11. Tu respuesta siempre debe estar en español.
 
   A continuación, te proporcionaré los datos de la tirada:
 `;

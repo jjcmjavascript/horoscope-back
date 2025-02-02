@@ -14,6 +14,7 @@ import { TarotFindRepository } from '../repositories/tarot-find.repository';
 import { TarotCreateDto } from '../tarot.dto';
 import { datesToZodiacSign } from '@shared/helpers/date.helper';
 import { HoroscopeFindOrCreateRepository } from '@modules/horoscope/repositories/horoscope-find-or-create.repository';
+import { config } from '@config/config';
 
 @Injectable()
 export class TarotReadService {
@@ -29,7 +30,7 @@ export class TarotReadService {
     try {
       // Get each 22 hours
       const date = new Date();
-      date.setHours(date.getHours() - 22);
+      date.setHours(date.getHours() - config.app.hoursToSearchTarot);
 
       const foundedTokens = await this.tokenFindRepository.execute({
         token: params.token,
@@ -57,15 +58,21 @@ export class TarotReadService {
           const [, m, d] = params.birthday.split('-');
           const zodiacSign = datesToZodiacSign(parseInt(m), parseInt(d));
           const result = await this.horoscopeFindOrCreateRepository.execute();
-          const singRedingHoroscope = result.horoscopeDetails.find(
+          const horoscopeBySign = result.horoscopeDetails.find(
             (h) =>
               removeAccents(h.sign) === removeAccents(zodiacSign?.sign || ''),
           );
 
-          horoscope = singRedingHoroscope
-            ? JSON.stringify(singRedingHoroscope.data, null, 2)
+          horoscope = horoscopeBySign
+            ? JSON.stringify(horoscopeBySign.data, null, 2)
             : null;
         }
+
+        const previousReading = await this.tarotFindRepository.execute({
+          where: {
+            pushNotificationTokenId: token.values.id,
+          },
+        });
 
         const chatResponse = await this.chatGpt.execute([
           {
@@ -79,6 +86,9 @@ export class TarotReadService {
               question: params.question,
               birthday: params.birthday,
               horoscope,
+              previousReading: previousReading
+                ? previousReading.values.reading
+                : null,
               cards: params.cards,
             }),
           },
