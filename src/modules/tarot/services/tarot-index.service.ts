@@ -34,6 +34,7 @@ export class TarotIndexService {
 
       const result = await this.tarotFindRepository.execute({
         where: {
+          pushNotificationTokenId: token.values.id,
           createdAt: {
             gt: date,
           },
