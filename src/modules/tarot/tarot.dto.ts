@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsNumber,
@@ -25,7 +25,10 @@ class Card {
 export class TarotIndexDto {
   @IsString()
   @MaxLength(100)
-  @Matches(/^ExponentPushToken\[[A-Za-z0-9]+\]$/, {
+  @Transform(({ value }) => {
+    return decodeURIComponent(value.toString());
+  })
+  @Matches(/^ExponentPushToken\[[A-Za-z0-9_\-]+\]$/, {
     message: 'Invalid push token',
   })
   token: string;
@@ -35,6 +38,9 @@ export class TarotCreateDto {
   @IsOptional()
   @IsString()
   @MaxLength(30)
+  @Transform(({ value }) => {
+    return value.toString().slice(0, 30);
+  })
   name?: string;
 
   @IsOptional()
