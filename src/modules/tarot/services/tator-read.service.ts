@@ -74,21 +74,6 @@ export class TarotReadService {
           },
         });
 
-        console.log({
-          role: 'user',
-          content: JSON.stringify({
-            name: params.name,
-            question: params.question,
-            birthday: params.birthday,
-            horoscope,
-            previousReading: previousReading
-              ? previousReading.values.reading
-              : null,
-            cards: params.cards,
-            goals: params.goals,
-          }),
-        });
-
         const chatResponse = await this.chatGpt.execute([
           {
             role: 'system',
