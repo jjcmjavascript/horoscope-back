@@ -1,14 +1,14 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { PushNotificationTokenCreateDto } from './push-notification-token.dto';
 import { PushNotificationTokenCreateRepository } from './repositories/push-notification-token-create.repository';
 import { Public } from '@shared/decorators/public.decorator';
-import { PushNotificationTokenPublishNotification } from './repositories/push-notification-token-publish.repository';
+import { PushNotificationersonalMsgRepository } from './repositories/push-notification-personal-msg.repository';
 
 @Controller('push-notification-tokens')
 export class PushNotificationTokenController {
   constructor(
     private readonly pushNotificationTokenCreateRepository: PushNotificationTokenCreateRepository,
-    private readonly pushNotificationTokenSend: PushNotificationTokenPublishNotification,
+    private readonly pushNotificationersonalMsgRepository: PushNotificationersonalMsgRepository,
   ) {}
 
   @Public()
@@ -17,12 +17,14 @@ export class PushNotificationTokenController {
     await this.pushNotificationTokenCreateRepository.execute(createDto);
   }
 
-  // @Public()
-  // @Get('publish')
-  // async publish(): Promise<void> {
-  //   return await this.pushNotificationTokenSend.execute(
-  //     'Llego tu horóscopo 📬',
-  //     'La magia del universo hoy estará contigo 🌌',
-  //   );
-  // }
+  @Public()
+  @Get('publish-one')
+  async publish(@Query() params: { token: string }): Promise<void> {
+    console.log('params', params);
+    // return await this.pushNotificationersonalMsgRepository.execute(
+    //   'Llego tu horóscopo 📬',
+    //   'La magia del universo hoy estará contigo 🌌',
+    //   params.token,
+    // );
+  }
 }

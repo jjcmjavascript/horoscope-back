@@ -8,6 +8,7 @@ import { PushNotificationScheduleService } from './push-notification-schedule.se
 import { PushNotificationTokenPublishNotification } from './repositories/push-notification-token-publish.repository';
 import { PushNotificacionTokenClearOldDataScheduleService } from './push-notificacion-token-clear-old-data-schedule.service';
 import { PushNotificationTokenBulkDestroyRespository } from './repositories/push-notification-token-bulk-destroy.respository';
+import { PushNotificationersonalMsgRepository } from './repositories/push-notification-personal-msg.repository';
 
 @Module({
   imports: [PrismaModule],
@@ -19,11 +20,13 @@ import { PushNotificationTokenBulkDestroyRespository } from './repositories/push
     PushNotificationScheduleService,
     PushNotificationTokenBulkDestroyRespository,
     PushNotificacionTokenClearOldDataScheduleService,
+    PushNotificationersonalMsgRepository,
   ],
   controllers: [PushNotificationTokenController],
   exports: [
     PushNotificationTokenCreateRepository,
     PushNotificationTokenFindAllRepository,
+    PushNotificationersonalMsgRepository,
   ],
 })
 export class PushNotificationTokenModule {}

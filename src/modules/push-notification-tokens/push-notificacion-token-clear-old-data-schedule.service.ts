@@ -9,7 +9,7 @@ export class PushNotificacionTokenClearOldDataScheduleService {
   ) {}
 
   @Cron('0 5 * * *')
-  async handleDailyHoroscope(): Promise<void> {
+  async execute(): Promise<void> {
     try {
       console.log(
         'Ejecutando tarea diaria [PushNotificacionTokenClearOldDataScheduleService]: Limpiar datos antiguos',

@@ -39,6 +39,7 @@ model PushNotificationToken {
   id Int @id @default(autoincrement())
   token String @unique @db.VarChar()
   userId Int? @unique
+  createdAt DateTime @default(now())
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
   tarot Tarot[]
 }
