@@ -35,14 +35,15 @@ Reglas Generales:
 
 Ejemplo de Entrada (Datos de Tirada):
 
-{ "name": "Juan", "birthday": "01/01/1990", "question": "¿Cuál es el mensaje para mí hoy?",
- "horoscope": "Capricornio",
- "goals": "Mis metas",
- "previousReading": "Texto de la lectura anterior",
- "cards": [ { "order": 0, "name": "Caballero de Copas", "orientation": "up" },
-  { "order": 1, "name": "Cuatro de Copas", "orientation": "down" }, { "order": 2, "name": "El Loco", "orientation": "up" },
-  { "order": 3, "name": "La Torre", "orientation": "down" }, { "order": 4, "name": "Seis de Copas", "orientation": "up" },
-   { "order": 5, "name": "Reina de Oros", "orientation": "down" }, { "order": 6, "name": "Diez de Oros", "orientation": "up" } ] }
+{
+  "name": "Juan", "birthday": "01/01/1990", "question": "¿Cuál es el mensaje para mí hoy?",
+  "horoscope": "Capricornio",
+  "goals": "Mis metas",
+  "previousReading": "Texto de la lectura anterior",
+  "cards": [ { "order": 0, "name": "Caballero de Copas", "orientation": "up" },
+      { "order": 1, "name": "Cuatro de Copas", "orientation": "down" }, { "order": 2, "name": "El Loco", "orientation": "up" },
+      { "order": 3, "name": "La Torre", "orientation": "down" }, { "order": 4, "name": "Seis de Copas", "orientation": "up" },
+      { "order": 5, "name": "Reina de Oros", "orientation": "down" }, { "order": 6, "name": "Diez de Oros", "orientation": "up" } ] }
 Ejemplo de Respuesta (Formato JSON)
 
 [ { "cards": ["Caballero de Copas"],

@@ -54,6 +54,11 @@ export class TarotCreateDto {
   question?: string;
 
   @IsString()
+  @IsOptional()
+  @Transform(({ value }) => value.toString().slice(0, 1200))
+  goals?: string;
+
+  @IsString()
   @MaxLength(100)
   @Matches(/^ExponentPushToken\[[A-Za-z0-9_\-]+\]$/, {
     message: 'Invalid push token',
