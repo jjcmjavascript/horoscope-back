@@ -13,7 +13,8 @@ export class PushNotificationScheduleService {
   async handleDailyHoroscope(): Promise<void> {
     try {
       this.pushNotificationTokenPublishNotification.execute(
-        PUSH_NOTIFICATION_MESSAGES.titles.sort(() => Math.random() - 0.5)[0],
+        'Horóscopo 📬: ' +
+          PUSH_NOTIFICATION_MESSAGES.titles.sort(() => Math.random() - 0.5)[0],
         PUSH_NOTIFICATION_MESSAGES.subtitles.sort(() => Math.random() - 0.5)[0],
       );
       console.log('notification sended');
