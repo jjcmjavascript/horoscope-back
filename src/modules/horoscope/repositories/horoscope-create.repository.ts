@@ -11,9 +11,7 @@ export class HoroscopeCreateRepository {
     private readonly horoscopeDetailsCreateRepository: HoroscopeDetailsCreateRepository,
   ) {}
 
-  async executeTransaction(
-    horoscopeJson: Record<string, Record<string, string>>,
-  ): Promise<{
+  async executeTransaction(horoscopeJson: Record<string, string>): Promise<{
     horoscope: Horoscope;
     horoscopeDetails: HoroscopeDetails[];
   }> {

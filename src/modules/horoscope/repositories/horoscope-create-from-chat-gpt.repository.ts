@@ -6,7 +6,7 @@ import { Horoscope } from '@shared/entities/horoscope.entity';
 
 interface RequestQuery {
   date: Date;
-  signs: Record<string, Record<string, string>>;
+  signs: Record<string, string>;
 }
 
 @Injectable()

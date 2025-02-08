@@ -27,7 +27,7 @@ export class HoroscopeDetailsCreateRepository {
   async executeBulkFromTransaction(
     ctx: Prisma.TransactionClient,
     horoscopeId: number,
-    masive: Record<string, Record<string, string>>,
+    masive: Record<string, string>,
   ): Promise<HoroscopeDetails[]> {
     const rawOroscopeDetails = [];
 
