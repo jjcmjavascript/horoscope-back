@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { PushNotificationTokenCreateDto } from './push-notification-token.dto';
 import { PushNotificationTokenCreateRepository } from './repositories/push-notification-token-create.repository';
@@ -17,14 +18,14 @@ export class PushNotificationTokenController {
     await this.pushNotificationTokenCreateRepository.execute(createDto);
   }
 
-  @Public()
-  @Get('publish-one')
-  async publish(@Query() params: { token: string }): Promise<void> {
-    console.log('params', params);
-    // return await this.pushNotificationersonalMsgRepository.execute(
-    //   'Llego tu horóscopo 📬',
-    //   'La magia del universo hoy estará contigo 🌌',
-    //   params.token,
-    // );
-  }
+  // @Public()
+  // @Get('publish-one')
+  // async publish(@Query() params: { token: string }): Promise<void> {
+  //   console.log('params', params);
+  //   return await this.pushNotificationersonalMsgRepository.execute(
+  //     '',
+  //     '',
+  //     params.token,
+  //   );
+  // }
 }
