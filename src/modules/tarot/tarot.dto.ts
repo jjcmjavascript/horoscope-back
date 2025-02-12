@@ -72,6 +72,8 @@ export class TarotCreateDto {
 
   @IsOptional()
   @IsString()
-  @MaxLength(200)
+  @Transform(({ value }) => {
+    return value.toString().slice(0, 200);
+  })
   thoughts?: string;
 }

@@ -74,21 +74,6 @@ export class TarotReadService {
           },
         });
 
-        console.log('previousReading', {
-          role: 'user',
-          content: JSON.stringify({
-            name: params.name,
-            question: params.question,
-            birthday: params.birthday,
-            horoscope,
-            previousReading: previousReading
-              ? previousReading.values.reading
-              : null,
-            cards: params.cards,
-            goals: params.goals,
-          }),
-        });
-
         const chatResponse = await this.chatGpt.execute([
           {
             role: 'system',
@@ -100,6 +85,7 @@ export class TarotReadService {
               name: params.name,
               question: params.question,
               birthday: params.birthday,
+              thoughts: params.thoughts,
               horoscope,
               previousReading: previousReading
                 ? previousReading.values.reading
@@ -117,11 +103,21 @@ export class TarotReadService {
           name: params.name,
           birthday: params.birthday,
           reading: JSON.stringify(JSON.parse(cleanedChatResponse)),
+          requestData: JSON.stringify({
+            name: params.name,
+            question: params.question,
+            thoughts: params.thoughts,
+            birthday: params.birthday,
+            horoscope,
+            cards: params.cards,
+            goals: params.goals,
+          }),
         });
       }
 
       return JSON.parse(result.values.reading);
     } catch (e: unknown) {
+      console.error(e);
       if (e instanceof BadRequestException) {
         throw e;
       }

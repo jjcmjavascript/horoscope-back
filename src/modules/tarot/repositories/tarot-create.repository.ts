@@ -13,6 +13,7 @@ export class TarotCreateRepository {
         name: tarot.name,
         birthday: tarot.birthday,
         reading: tarot.reading,
+        requestData: tarot.requestData,
       },
     });
 
