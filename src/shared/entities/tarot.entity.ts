@@ -4,6 +4,7 @@ export interface PrimitiveTarot {
   name: string;
   birthday: string;
   reading: string;
+  requestData: string;
 }
 
 export class Tarot {
@@ -16,6 +17,7 @@ export class Tarot {
       name: primitive.name,
       birthday: primitive.birthday,
       reading: primitive.reading,
+      requestData: primitive.requestData,
     };
   }
 
@@ -30,6 +32,7 @@ export class Tarot {
       name: this.attributes.name,
       birthday: this.attributes.birthday,
       reading: this.attributes.reading,
+      requestData: this.attributes.requestData,
     };
   }
 

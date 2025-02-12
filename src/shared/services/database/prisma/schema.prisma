@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
@@ -9,71 +9,71 @@ datasource db {
 }
 
 model User {
-  id    Int @id @default(autoincrement())
-  email String @unique @db.VarChar()
-  name  String @db.VarChar()
-  lastname  String? @db.VarChar()
-  tax String? @db.VarChar()
-  active Boolean @default(true)
-  password Password?
+  id                    Int                    @id @default(autoincrement())
+  email                 String                 @unique @db.VarChar()
+  name                  String                 @db.VarChar()
+  lastname              String?                @db.VarChar()
+  tax                   String?                @db.VarChar()
+  active                Boolean                @default(true)
+  password              Password?
   pushNotificationToken PushNotificationToken?
-  roles UserRole[]
-  yearListItem YearListItem[]
+  roles                 UserRole[]
+  yearListItem          YearListItem[]
 }
 
 model Password {
-  id Int @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   password String @db.VarChar()
-  userId Int @unique
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   Int    @unique
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UserRole {
-  id Int @id @default(autoincrement())
-  name String  @db.VarChar()
+  id     Int    @id @default(autoincrement())
+  name   String @db.VarChar()
   userId Int
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model PushNotificationToken {
-  id Int @id @default(autoincrement())
-  token String @unique @db.VarChar()
-  userId Int? @unique
+  id        Int      @id @default(autoincrement())
+  token     String   @unique @db.VarChar()
+  userId    Int?     @unique
   createdAt DateTime @default(now())
-  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tarot Tarot[]
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tarot     Tarot[]
 }
 
-
 model Horoscope {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  details HoroscopeDetail[]
+  id        Int               @id @default(autoincrement())
+  createdAt DateTime          @default(now())
+  details   HoroscopeDetail[]
 }
 
 model HoroscopeDetail {
-  id Int  @id @default(autoincrement())
-  sign String @db.VarChar()
-  horoscopeId Int @db.Integer
-  horoscope Horoscope @relation(fields: [horoscopeId], references: [id] )
-  data String @db.Text
+  id          Int       @id @default(autoincrement())
+  sign        String    @db.VarChar()
+  horoscopeId Int       @db.Integer
+  horoscope   Horoscope @relation(fields: [horoscopeId], references: [id])
+  data        String    @db.Text
 }
 
 model YearListItem {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  description String @db.VarChar
-  locked Boolean @db.Boolean
-  userId Int? @db.Integer
-  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  description String   @db.VarChar
+  locked      Boolean  @db.Boolean
+  userId      Int?     @db.Integer
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Tarot {
-  id Int @id @default(autoincrement())
+  id                      Int                   @id @default(autoincrement())
   pushNotificationTokenId Int
-  name String? @db.VarChar()
-  birthday String? @db.VarChar()
-  pushNotification PushNotificationToken @relation(fields: [pushNotificationTokenId], references: [id], onDelete: Cascade)
-  reading String @db.Text
-  createdAt DateTime @default(now())
+  name                    String?               @db.VarChar()
+  birthday                String?               @db.VarChar()
+  pushNotification        PushNotificationToken @relation(fields: [pushNotificationTokenId], references: [id], onDelete: Cascade)
+  requestData             String                @db.Text
+  reading                 String                @db.Text
+  createdAt               DateTime              @default(now())
 }

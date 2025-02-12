@@ -69,4 +69,9 @@ export class TarotCreateDto {
   @ValidateNested({ each: true })
   @Type(() => Card)
   cards: Card[];
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  thoughts?: string;
 }
