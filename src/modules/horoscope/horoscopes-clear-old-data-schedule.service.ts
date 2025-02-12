@@ -15,7 +15,7 @@ export class HoroscopesClearOldDataScheduleService {
   @Cron('0 5 * * *')
   async handleDailyHoroscope(): Promise<void> {
     try {
-      console.log(
+      console.info(
         'Ejecutando tarea diaria [HoroscopesClearOldDataScheduleService]: Limpiar datos antiguos',
       );
 
@@ -47,7 +47,7 @@ export class HoroscopesClearOldDataScheduleService {
         },
       });
 
-      console.log(
+      console.info(
         'Datos antiguos eliminados [HoroscopesClearOldDataScheduleService]',
       );
     } catch (error) {

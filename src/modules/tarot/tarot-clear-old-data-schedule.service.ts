@@ -11,12 +11,12 @@ export class TarotClearOldDataScheduleService {
   @Cron('0 5 * * *')
   async execute(): Promise<void> {
     try {
-      console.log(
+      console.info(
         'Ejecutando tarea diaria [TarotClearOldDataScheduleService]: Limpiar datos antiguos',
       );
 
       const date = new Date();
-      date.setDate(date.getDate() - 5);
+      date.setDate(date.getDate() - 7);
 
       await this.tarotBulkDestroyRepository.execute({
         where: {
@@ -25,7 +25,7 @@ export class TarotClearOldDataScheduleService {
           },
         },
       });
-      console.log(
+      console.info(
         'Datos antiguos eliminados [TarotClearOldDataScheduleService]',
       );
     } catch (error) {

@@ -11,12 +11,12 @@ export class PushNotificacionTokenClearOldDataScheduleService {
   @Cron('0 5 * * *')
   async execute(): Promise<void> {
     try {
-      console.log(
+      console.info(
         'Ejecutando tarea diaria [PushNotificacionTokenClearOldDataScheduleService]: Limpiar datos antiguos',
       );
 
       const date = new Date();
-      date.setDate(date.getDate() - 3);
+      date.setDate(date.getDate() - 7);
 
       await this.pushNotificationTokenBulkDestroyRespository.execute({
         where: {
@@ -25,7 +25,7 @@ export class PushNotificacionTokenClearOldDataScheduleService {
           },
         },
       });
-      console.log(
+      console.info(
         'Datos antiguos eliminados [PushNotificacionTokenClearOldDataScheduleService]',
       );
     } catch (error) {
