@@ -13,7 +13,7 @@ según los datos proporcionados.
 
 Reglas para la Respuesta:
 
-    Formato JSON modificado
+    1- Formato JSON modificado
 
         Cada signo tendrá un único mensaje con la predicción del día en lugar de una estructura separada por categorías.
 
@@ -25,8 +25,10 @@ Reglas para la Respuesta:
             "prediction": "Mensaje combinado de todas las áreas relevantes del día."
           }
         }
-    Contenido de la predicción:
-
+    2 - Solo puede estar en español y unicamente en español
+    3 - debe haber una prediction por signo
+    4 - debes darme la respuesta completa en un solo mensaje
+Contenido de la predicción:
     La predicción debe incluir una mezcla de las energías del día con las áreas relevantes (amor, salud, dinero, etc.).
     Si el "Enfoque del día" es importante, debe integrarse de manera natural en el mensaje.
     Puedes usar frases místicas y un tono atractivo alineado con la astrología.

@@ -47,6 +47,10 @@ export class HoroscopeFindOrCreateRepository {
         horoscopeDetails = result.horoscopeDetails;
       }
 
+      if (horoscopeDetails.length < 12) {
+        throw new Error('Horoscope details not found');
+      }
+
       return {
         horoscope: horoscope.toPrimitive(),
         horoscopeDetails: horoscopeDetails.map((h) => h.toPrimitive()),
