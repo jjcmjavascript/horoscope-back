@@ -60,7 +60,8 @@ export class TarotReadService {
           const result = await this.horoscopeFindOrCreateRepository.execute();
           const horoscopeBySign = result.horoscopeDetails.find(
             (h) =>
-              removeAccents(h.sign) === removeAccents(zodiacSign?.sign || ''),
+              removeAccents(h.sign).toLocaleLowerCase() ===
+              removeAccents(zodiacSign?.sign || '').toLocaleLowerCase(),
           );
 
           horoscope = horoscopeBySign
