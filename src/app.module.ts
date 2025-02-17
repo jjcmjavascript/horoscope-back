@@ -15,6 +15,7 @@ import { AuthGuard } from '@modules/auth/auth.guard';
 import { TarotModule } from '@modules/tarot/tarot.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { RequestLoggerMiddleware } from '@shared/middlewares/request-logget.middleware';
+import { HomeModule } from '@modules/home/home.module';
 // import { YearListItemModule } from '@modules/year-list-item/year-list-item.module';
 
 const providers = [];
@@ -49,6 +50,7 @@ providers.push({
     HoroscopeModule,
     PushNotificationTokenModule,
     TarotModule,
+    HomeModule,
   ],
   controllers: [],
   providers,

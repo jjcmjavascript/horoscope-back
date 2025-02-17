@@ -4,9 +4,13 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { config } from '@config/config';
 import helmet from 'helmet';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'node:path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   app.use(helmet());
 
