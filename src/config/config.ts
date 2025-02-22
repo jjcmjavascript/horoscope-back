@@ -10,7 +10,9 @@ export const config = {
     port,
     isProduction,
     hoursToSearch: 8,
-    hoursToSearchTarot: 68,
+    hoursToSearchTarot: process.env.HOURS_TO_SEARCH_TAROT
+      ? parseInt(process.env.HOURS_TO_SEARCH_TAROT)
+      : 22,
     mobileKey: process.env.MOBILE_KEY,
     agent: 'mobile/horoscope',
   },
