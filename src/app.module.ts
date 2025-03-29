@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { SentryModule } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
 import { SentryGlobalFilter } from '@sentry/nestjs/setup';
-import { ScheduleModule } from '@nestjs/schedule';
+// import { ScheduleModule } from '@nestjs/schedule';
 
 // import { AuthGuard } from './modules/auth/auth.guard';
 import { PushNotificationTokenModule } from '@modules/push-notification-tokens/push-notification-token.module';
@@ -45,7 +45,7 @@ providers.push({
         limit: 5,
       },
     ]),
-    ScheduleModule.forRoot(),
+    // ScheduleModule.forRoot(),
     SentryModule.forRoot(),
     HoroscopeModule,
     PushNotificationTokenModule,
